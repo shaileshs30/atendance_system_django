@@ -1,0 +1,110 @@
+{% extends 'attendance/base.html' %}
+{% block content %}
+
+<style>
+/* ===== PAGE BACKGROUND ===== */
+body {
+    background: linear-gradient(135deg, #f3faf5, #e6f4ea);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== MAIN WRAPPER ===== */
+.attendance-wrapper {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+/* ===== TITLE ===== */
+.attendance-title {
+    text-align: center;
+    color: #1b5e20;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* ===== CARD DESIGN ===== */
+.attendance-card {
+    background: linear-gradient(135deg, #e8f5e9, #f7fcf8);
+    padding: 16px 22px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+.attendance-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* ===== STUDENT INFO ===== */
+.student-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1b5e20;
+}
+
+.attendance-date {
+    font-size: 13px;
+    color: #4caf50;
+    margin-top: 2px;
+}
+
+/* ===== STATUS BADGE ===== */
+.status {
+    padding: 7px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.status-present {
+    background: #c8e6c9;
+    color: #1b5e20;
+}
+
+.status-absent {
+    background: #ffcdd2;
+    color: #b71c1c;
+}
+
+/* ===== EMPTY MESSAGE ===== */
+.empty-msg {
+    text-align: center;
+    color: #666;
+    margin-top: 40px;
+    font-size: 16px;
+}
+</style>
+
+<div class="attendance-wrapper">
+    <h2 class="attendance-title">📋 Attendance Records</h2>
+
+    {% for r in records %}
+        <div class="attendance-card">
+            <div class="student-info">
+                <span class="student-name">{{ r.student.name }}</span>
+                <span class="attendance-date">{{ r.date }}</span>
+            </div>
+
+            {% if r.present %}
+                <span class="status status-present">✔ Present</span>
+            {% else %}
+                <span class="status status-absent">✖ Absent</span>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p class="empty-msg">No attendance records found</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

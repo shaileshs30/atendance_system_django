@@ -1,0 +1,108 @@
+{% extends 'attendance/base.html' %}
+{% block content %}
+
+<style>
+/* ===== PAGE TITLE ===== */
+.mark-title {
+    text-align: center;
+    font-size: 26px;
+    color: #1b5e20;
+    margin-bottom: 8px;
+}
+
+.mark-date {
+    text-align: center;
+    color: #4caf50;
+    margin-bottom: 25px;
+}
+
+/* ===== FORM CARD ===== */
+.mark-card {
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(135deg, #e8f5e9, #f7fcf8);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== STUDENT ROW ===== */
+.student-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+}
+
+.student-row:hover {
+    background: #f1f8f4;
+}
+
+/* ===== STUDENT NAME ===== */
+.student-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1b5e20;
+}
+
+/* ===== CHECKBOX STYLE ===== */
+.student-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #66bb6a;
+    cursor: pointer;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.submit-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #81c784, #66bb6a);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+}
+
+/* ===== EMPTY MESSAGE ===== */
+.empty-msg {
+    text-align: center;
+    color: #777;
+    margin-top: 20px;
+}
+</style>
+
+<h2 class="mark-title">📝 Mark Attendance</h2>
+<p class="mark-date">Date: <strong>{{ today }}</strong></p>
+
+<form method="post" class="mark-card">
+    {% csrf_token %}
+
+    {% for s in students %}
+        <div class="student-row">
+            <span class="student-name">{{ s.name }}</span>
+            <input type="checkbox" name="{{ s.id }}">
+        </div>
+    {% empty %}
+        <p class="empty-msg">No students available</p>
+    {% endfor %}
+
+    <button type="submit" class="submit-btn">✔ Submit Attendance</button>
+</form>
+
+{% endblock %}
